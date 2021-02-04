@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 )
 
 type Request struct {
@@ -46,5 +47,5 @@ func main() {
 
 	http.HandleFunc("/tick", hello)
 
-	_ = http.ListenAndServe(":8080", nil)
+	_ = http.ListenAndServe(":"+os.Getenv("PORT"), nil)
 }
