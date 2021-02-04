@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"os"
 )
@@ -22,7 +23,7 @@ func hello(w http.ResponseWriter, r *http.Request) {
 	client := &http.Client{}
 
 	// Declare HTTP Method and Url
-	req, err := http.NewRequest("Get", "https://en7nthov5hqb.x.pipedream.net", nil)
+	req, err := http.NewRequest("Get", "https://hive.shopbase.com/admin", nil)
 
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -31,10 +32,24 @@ func hello(w http.ResponseWriter, r *http.Request) {
 	}
 	// Set cookie
 	req.Header.Set("Cookie", fmt.Sprintf("PHPSESSID=%s", request.User))
-	_, err = client.Do(req)
+	res, err := client.Do(req)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		_, _ = w.Write([]byte(err.Error()))
+		return
+	}
+
+	if res.StatusCode != http.StatusOK {
+		data, err := ioutil.ReadAll(res.Body)
+
+		// error handle
+		if err != nil {
+			w.WriteHeader(res.StatusCode)
+			_, _ = w.Write([]byte(err.Error()))
+		} else {
+			w.WriteHeader(res.StatusCode)
+			_, _ = w.Write(data)
+		}
 		return
 	}
 
