@@ -31,7 +31,6 @@ func hello(w http.ResponseWriter, r *http.Request) {
 	}
 	// Set cookie
 	req.Header.Set("Cookie", fmt.Sprintf("PHPSESSID=%s", request.User))
-	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	_, err = client.Do(req)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
