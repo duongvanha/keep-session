@@ -22,7 +22,7 @@ func hello(w http.ResponseWriter, r *http.Request) {
 	client := &http.Client{}
 
 	// Declare HTTP Method and Url
-	req, err := http.NewRequest("Get", "https://en7nthov5hqb.x.pipedream.net/", nil)
+	req, err := http.NewRequest("Get", "https://en7nthov5hqb.x.pipedream.net", nil)
 
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
