@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 )
 
 type Session struct {
@@ -72,5 +73,5 @@ func main() {
 
 	http.HandleFunc("/tick", hello)
 
-	_ = http.ListenAndServe(":8080", nil)
+	_ = http.ListenAndServe(":"+os.Getenv("PORT"), nil)
 }
